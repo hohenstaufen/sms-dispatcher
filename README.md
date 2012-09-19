@@ -8,7 +8,9 @@ sms-dispatcher is a sort of middleware (written in python) that offers a web API
 Requirements
 ------------
 Requirements are listed in `requirements/default` and `requirements/optional` files; you can install them using [pip].
+
 You need to have a [redis] daemon on your machine; keep in mind that you will also need a working Gammu setup.
+
 If you are using [virtualenv] with [virtualenvwrapper], you have to use the `--system-site-packages` option, in order to access to Gammu python bindings that comes with the Gammu package.
 
 Configuration
