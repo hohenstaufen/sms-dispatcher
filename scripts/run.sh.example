@@ -1,0 +1,4 @@
+#!/bin/sh
+source /root/.virtualenvs/sms-dispatcher/bin/activate
+exec python ../sms-dispatcher/sms_dispatcher.py
+exec rqworker

@@ -1,3 +1,5 @@
+ENABLE_RQ_DASHBOARD = True
+
 MODEM = {
     'port': '/dev/ttyUSB0',
     'mode': 'dummy',

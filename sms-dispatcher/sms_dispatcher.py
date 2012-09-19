@@ -1,24 +1,34 @@
 from flask import Flask, request, abort
 from rq import Queue, use_connection
+from settings import ENABLE_RQ_DASHBOARD
 from sms import send as sms_send
 from sms import read as sms_read
 from sms import lock
 
 app = Flask(__name__)
+
+if ENABLE_RQ_DASHBOARD:
+    try:
+        from rq_dashboard import RQDashboard
+    except ImportError:
+        pass
+    else:
+        RQDashboard(app)
+
 use_connection()
 queue = Queue()
 
 
 @app.route('/')
 def api_root():
-    return
+    return ""
 
 @app.route('/send', methods=['POST'])
 def send():
     if request.headers['Content-Type'] == 'application/json':
         for sms in request.json:
             queue.enqueue(sms_send, sms)
-        return
+        return ""
     else:
         return abort(415)
 
@@ -26,7 +36,7 @@ def send():
 def read():
     if lock.acquire(False):
         queue.enqueue(sms_read)
-        return
+        return ""
     else:
         return abort(406)
 
