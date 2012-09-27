@@ -1,9 +1,9 @@
 from flask import Flask, request, abort
+from redis import Redis
 from rq import Queue, use_connection
 from settings import ENABLE_RQ_DASHBOARD
 from sms import send as sms_send
 from sms import read as sms_read
-from sms import lock
 
 app = Flask(__name__)
 
@@ -15,8 +15,7 @@ if ENABLE_RQ_DASHBOARD:
     else:
         RQDashboard(app)
 
-use_connection()
-queue = Queue()
+queue = Queue(connection=Redis())
 
 
 @app.route('/')
@@ -34,11 +33,8 @@ def send():
 
 @app.route('/read', methods=['GET'])
 def read():
-    if lock.acquire(False):
-        queue.enqueue(sms_read)
-        return ""
-    else:
-        return abort(406)
+    queue.enqueue(sms_read)
+    return ""
 
 
 if __name__ == '__main__':

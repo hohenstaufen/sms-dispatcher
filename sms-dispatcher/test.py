@@ -14,5 +14,20 @@ payload = [
 
 headers = {'content-type':'application/json'}
 
-r = requests.post('http://localhost:5000/send', data=json.dumps(payload),
+r = requests.post('http://localhost:8000/api/sms/receive', data=json.dumps(payload),
     headers=headers)
+
+i = 0
+while i < 30:
+	i++
+	log = Log()
+	log.module = 'test'
+	log.type = 'S'
+	log.valid = True
+	log.inbound = True
+	log.sender_name = "prova"
+	log.receiver_name = "test"
+	log.text = "afdgfdg"
+	import datetime
+	log.datetime = datetime.datetime.now()
+	log.save()

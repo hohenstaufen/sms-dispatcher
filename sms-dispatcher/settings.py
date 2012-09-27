@@ -8,7 +8,7 @@ MODEM = {
 }
 
 REMOTE = {
-    'sms': 'localhost:8000/api/sms/received/'
+    'sms': 'http://localhost:8000/api/received/'
 }
 
 try:
