@@ -47,7 +47,7 @@ def read():
                         smss.append({
                             'Text': m['Text'],
                             'Number': m['Number'],
-                            'DateTime': m['DateTime'],
+                            'DateTime': str(m['DateTime']),
                         })
                         sm.DeleteSMS(Folder=m['Folder'],
                                      Location=int(str(m['Location'])[-4:]))
